@@ -9,11 +9,9 @@ let searchWord;
 let lastInput;
 
 function analyze() {
-    // STOP RENDER HTML FOR SAME INPUT
-    if (lastInput == inputText.value) {
-        // console.log("return before render");
-        return;
-    }
+    // stop repeating output
+    resultContainer.innerHTML = '';
+    
 
     // check search word has any value
     if (inputSearch.value) {
@@ -26,7 +24,7 @@ function analyze() {
 
 
     let main = document.querySelector('.result-container');
-    let container = document.querySelector('.method-container');
+    // let container = document.querySelector('.method-container');
 
     // let strConstructor = new String(inputText.value);
     let input = inputText.value;
@@ -77,6 +75,7 @@ function analyze() {
         main.appendChild(p);
     })
     lastInput = inputText.value;
+    lastSearch = searchWord;
 
     /* operation.map(item => {
         let div;
@@ -104,7 +103,7 @@ btn.addEventListener("click", analyze);
 function reset() {
     inputText.value = "";
     inputSearch.value = ""
-    // operation = [];
+    operation = [];
     resultContainer.innerHTML = '';
 }
 
