@@ -1,28 +1,34 @@
 let btn = document.querySelector('.analyze-btn');
 let resetBtn = document.querySelector('.reset-btn');
 let inputText = document.querySelector('#textInput');
+let inputSearch = document.getElementById('inputSearch');
 
-let operation = [];
+var operation = [];
+let searchWord;
 
 function analyze() {
 
+    // check search word has any value
+    if (inputSearch.value) {
+        searchWord = inputSearch.value;
+    }
 
     // check input in not an empty
-    if(!inputText.value){ return alert('Enter a string ') }
+    if (!inputText.value) { return alert('Enter a string ') };
+    if (!inputSearch.value) { return alert('Enter a Search string ') };
+
 
     let main = document.querySelector('.result-container');
-    let container = document.querySelector('.method-container')
+    // let container = document.querySelector('.method-container');
 
-    let strConstructor = new String(inputText.value);
+    // let strConstructor = new String(inputText.value);
     let input = inputText.value;
-    // input.padSatrt()
-
     operation = [
         // 1.Creating Strings
         { name: "", value: `<h3>1.Creating Strings</h3>` },
         { name: "Simple String : ", value: input },
         { name: "Template Literal : ", value: `Processed text: ${input}` },
-        { name: "String Constructor : ", value: strConstructor },
+        { name: "String Constructor : ", value: `${new String(inputText.value)} (Type of : ${typeof(new String(inputText.value))})` },
         // 2. String Concatenation
         { name: "", value: `<h3>2. String Concatenation</h3>` },
         { name: "Using + Operator : ", value: "input:" + input + "!" },
@@ -34,12 +40,13 @@ function analyze() {
         { name: "Uppercase : ", value: input.toUpperCase() },
         { name: "Lowercase : ", value: input.toLowerCase() },
         { name: "4th Character : ", value: input.at(3) },
-        { name: "Index of 'text' : ", value: input.indexOf('text') },
-        { name: "Last Index of 'text' : ", value: input.lastIndexOf('text') },
-        { name: "Contains 'text' : ", value: input.includes('text') },
-        { name: "Starts with 'Sample : ", value: input.startsWith('Sample') },
+        { name: `Index of '${searchWord}' : `, value: input.indexOf(searchWord) },
+        { name: `Last Index of '${searchWord}' :`, value: input.lastIndexOf(searchWord) },
+        { name: `Contains '${searchWord}' : `, value: input.includes(searchWord) },
+        { name: `Match '${searchWord}' : `, value: input.match(searchWord) },
+        { name: "Starts with 'Sample'  : ", value: input.startsWith('Sample') },
         { name: "Ends with 'analysis' : ", value: input.endsWith('analysis') },
-        { name: "Substring (first 10) : ", value: input.substring(1, 10) },
+        { name: "Substring (first 10) : ", value: input.substring(0, 10) },
         { name: "Slice (last 10) : ", value: input.slice(-10) },
         { name: "Replace 'text' with 'content : ", value: input.replace('text', 'content') },
         { name: "Trimmed Text : ", value: input.trim() },
@@ -59,36 +66,36 @@ function analyze() {
         let p = document.createElement('p');
         p.innerHTML = `<strong>${item.name}</strong>${item.value}`;
         main.appendChild(p);
-    }) 
+    })
 
-   /*  operation.map(item => {
-        let div;
-        if (item.name == "") {
-            div = document.createElement('div');
-            div.classList.add("result-container");
-            container.appendChild(div);
-            console.log(div);
-
-        } else {
-            const p = document.createElement('p');
-            p.innerHTML = `<strong>${item.name}</strong>${item.value}`;
-            div.appendChild(p);
-        }
-
-    }); */
-
-
-    //empty
-    operation = [];
+    /*  operation.map(item => {
+         let div;
+         if (item.name == "") {
+             div = document.createElement('div');
+             div.classList.add("result-container");
+             container.appendChild(div);
+             console.log(div);
+ 
+         } else {
+             const p = document.createElement('p');
+             p.innerHTML = `<strong>${item.name}</strong>${item.value}`;
+             div.appendChild(p);
+         }
+ 
+     }); */
 }
 
 btn.addEventListener("click", analyze);
 
-resetBtn.addEventListener("click", function(){
-    console.log("reset");
-    inputText.value = " ";
-    operation.length = 0;
-})
+// reset function
+function reset() {
+    inputText.value = "";
+    inputSearch.value = ""
+    // operation = [];
+    document.querySelector('.result-container').innerHTML = '';
+}
+
+resetBtn.addEventListener("click", reset)
 
 
 
