@@ -2,11 +2,18 @@ let btn = document.querySelector('.analyze-btn');
 let resetBtn = document.querySelector('.reset-btn');
 let inputText = document.querySelector('#textInput');
 let inputSearch = document.getElementById('inputSearch');
+let resultContainer = document.querySelector('.result-container')
 
 var operation = [];
 let searchWord;
+let lastInput;
 
 function analyze() {
+    // STOP RENDER HTML FOR SAME INPUT
+    if (lastInput == inputText.value) {
+        // console.log("return before render");
+        return;
+    }
 
     // check search word has any value
     if (inputSearch.value) {
@@ -19,16 +26,17 @@ function analyze() {
 
 
     let main = document.querySelector('.result-container');
-    // let container = document.querySelector('.method-container');
+    let container = document.querySelector('.method-container');
 
     // let strConstructor = new String(inputText.value);
     let input = inputText.value;
+
     operation = [
         // 1.Creating Strings
         { name: "", value: `<h3>1.Creating Strings</h3>` },
         { name: "Simple String : ", value: input },
         { name: "Template Literal : ", value: `Processed text: ${input}` },
-        { name: "String Constructor : ", value: `${new String(inputText.value)} (Type of : ${typeof(new String(inputText.value))})` },
+        { name: "String Constructor : ", value: `${new String(inputText.value)} (Type of : ${typeof (new String(inputText.value))})` },
         // 2. String Concatenation
         { name: "", value: `<h3>2. String Concatenation</h3>` },
         { name: "Using + Operator : ", value: "input:" + input + "!" },
@@ -44,6 +52,7 @@ function analyze() {
         { name: `Last Index of '${searchWord}' :`, value: input.lastIndexOf(searchWord) },
         { name: `Contains '${searchWord}' : `, value: input.includes(searchWord) },
         { name: `Match '${searchWord}' : `, value: input.match(searchWord) },
+        { name: `Search '${searchWord}' : `, value: input.search(searchWord) },
         { name: "Starts with 'Sample'  : ", value: input.startsWith('Sample') },
         { name: "Ends with 'analysis' : ", value: input.endsWith('analysis') },
         { name: "Substring (first 10) : ", value: input.substring(0, 10) },
@@ -67,24 +76,28 @@ function analyze() {
         p.innerHTML = `<strong>${item.name}</strong>${item.value}`;
         main.appendChild(p);
     })
+    lastInput = inputText.value;
 
-    /*  operation.map(item => {
-         let div;
-         if (item.name == "") {
-             div = document.createElement('div');
-             div.classList.add("result-container");
-             container.appendChild(div);
-             console.log(div);
- 
+    /* operation.map(item => {
+        let div;
+        if (item.name == "") {
+            div = document.createElement('div');
+            div.classList.add("result-container");
+            div.innerHTML = item.value;
+            container.appendChild(div);
+            
          } else {
-             const p = document.createElement('p');
-             p.innerHTML = `<strong>${item.name}</strong>${item.value}`;
+         const p = document.createElement('p');
+         p.innerHTML = `<strong>${item.name}</strong>${item.value}`;
+         if(div){
              div.appendChild(p);
+         }else{
+             container.appendChild(p);
          }
- 
-     }); */
+         
+     } 
+});*/
 }
-
 btn.addEventListener("click", analyze);
 
 // reset function
@@ -92,7 +105,7 @@ function reset() {
     inputText.value = "";
     inputSearch.value = ""
     // operation = [];
-    document.querySelector('.result-container').innerHTML = '';
+    resultContainer.innerHTML = '';
 }
 
 resetBtn.addEventListener("click", reset)
